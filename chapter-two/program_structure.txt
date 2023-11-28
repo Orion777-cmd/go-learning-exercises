@@ -1,0 +1,83 @@
+reserved variables 
+break default func interface select
+case defer go map struct
+chan else goto package switch
+const fallthrough if range type
+continue for import return var
+
+constant, types and functions are not reserved so we may declare them as we fit.
+
+-> if an entity is declared within a function, it is local tothat function. if declared outside of a function 
+however it is visible in all ifelse of the package to which it belongs.
+
+-> the case of the first letter of a name determines its visibliity across package boundaries.
+        -name begins with an upper case it is exported (visible and accessible outside of its own package and reffered by other parts of the program)
+-> package names are always lowercase.
+-> short names are preferable but the larger the scope of a name, the longer and more meaningful it should be.
+-> use camel case
+
+DECLARATION:
+names a program eneity and specifies some or all of its properties. var , const , type , func
+
+in go there is not such a thing called uninitialized variable. simplifies code and often ensures sensible behavior of boundary conditons.
+
+-> short variable declarations are used to declare and initialize the majority of local variables. A var declaration tends to be reserved for local variables that need an explicit type that differs
+from that of the initializer expression.
+
+->a short variable declaration does not necessarily declare all the variables on its left hand side. if some of them were already declared in the same lexical block 
+then the short declartion acts like an assignment to those variables.
+
+
+POINTERS
+is the address of a variable. the location in which a value is stored
+-not every value has an address, but ever yvariable does. with a pointer we can read or update the value of a variable indirectly.without knowing the name of the varialbe if indeed it has a name.
+
+ &x ---> address of x
+ *x ---> pointer to x (yields the value of tha tvariable, it can appear in the left of a variable)
+
+ go has the ability to allocate memory dynamically using pointers. dynamic memory allocation allows you to create data structures that can grow and shrink as needed
+
+
+-> can use pointers to pass parameters by reference , which means that the function can modify the original parameter value.
+
+-> pointer arithemtic is limited to a few use cases. like to access elements of an array , but you cannot use it to perform arbitrary pointer arithmetic like c/c++. the ++ operator can not be used with pointers in Go.
+a better way to increment a pointer is by using the unsafe package.
+
+-> arrays are value types, which means tha twhen you assign an array to a variable or pass it to a function, a copy of the entire array is made.however you can use pointers t ocreate 
+a reference to an array , which allows you t omodify the original array.
+
+-> allows the function to modify the original parameter value.
+
+=> pointer aliasing is useful because it allows us to access a variable without using its name. aliases can occur when we copy values of other referece types like slices, maps , and channels
+
+THE NEW FUNCTION 
+the expression new(T) creates an unamed variable of type T, initializes it to the zero value of T, and returns its address, which is the value of type *t
+each call to new returns a sistinct variable with a unique address.
+
+the new function is relatively rarely used because themost common unnamed variables ar of struct type for which the struct leteral syntax is more flexible.
+
+LIFETIME OF VARIABLES 
+ is the interval of time during which it exists as the program executes, 
+ the lifetime of a package-level variable is the entire execution of the program. 
+ local variables have dynamic lifetimes: a new instance is created each time the declaration statement is executed
+
+ GARBAGE COLLECTION IN GOLANG(BY GARY CHAN)
+ automatically manages memory allocation and deallocation, freeing the programmerfrom the responsibliity and
+ potential errosr associated with manual memory management.
+
+ => use a concurrent, tri-color, mark-sweep garbage collector .
+
+ concurrent => garbage collector runs concurrently with the execution of the program.(minimal pause time)
+ Tri-color => abstraction used in the marking phase of the garbage collector. objects categorized in 3 colors.
+    white - objects that haven't been inspected
+    grey- objects that have been inspected but their references havent been inspected
+    black - objects tha have been inspected, including their references
+mark-phase - traverses the graph of allocated objects , starting from teh roots and marking objects as live. does this 
+by changing the color of objects from white to grey as they are discovered.
+
+sweep-phase -sweeps through the memory, identifying and reclaiming memory that has not been marked aslive. objects that 
+remain white after the mark phase are considered unreachable and are safely collected.
+
+-> if a variable is going to escape from a function the compiler is going to store the variable in the heap but if it doesn not 
+escape from the function it is going to store it in the stack.
+
