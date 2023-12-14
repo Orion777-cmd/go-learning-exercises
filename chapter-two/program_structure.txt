@@ -81,3 +81,5 @@ remain white after the mark phase are considered unreachable and are safely coll
 -> if a variable is going to escape from a function the compiler is going to store the variable in the heap but if it doesn not 
 escape from the function it is going to store it in the stack.
 
+-> whether two values may be compared with == and != is related to assignability: in any compariso, the first operand must be assignable to the type of the 
+second operand or vice versa.
