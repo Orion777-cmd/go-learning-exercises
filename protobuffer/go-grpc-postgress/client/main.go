@@ -2,12 +2,11 @@ package main
 
 import (
 	"context"
-	"log"
-	"time"
-	pb "go-grpc-postgress/proto"
+	pb "github.com/orion777-cmd/Go-LEARNING-EXCERCISES/golang/protobuf/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
+
 
 func main(){
 	conn, err := grpc.Dial(":50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
@@ -22,10 +21,9 @@ func main(){
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 
 	defer cancel()
-
 	newTodos := []*pb.NewTodo{
-		{name: "Buy Pizza", description: "Buy pizza for dinner", done: false},
-		{name: "Buy Milk", description: "Buy milk for breakfast", done: false},
+		&pb.NewTodo{Name: "Buy Pizza", Description: "Buy pizza for dinner", Done: false},
+		&pb.NewTodo{Name: "Buy Milk", Description: "Buy milk for breakfast", Done: false},
 	}
 
 	for _, newTodo := range newTodos{

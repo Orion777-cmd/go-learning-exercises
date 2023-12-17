@@ -9,7 +9,7 @@ import (
 
 func main(){
 	var conn *grpc.ClientConn
-	conn, err := grpc.Dial(":9000", grpc.WithInsecure())
+	conn, err := grpc.Dial(":9000", WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil{
 		log.Fatalf("Could not connect to grpc server: %v", err)
 	}

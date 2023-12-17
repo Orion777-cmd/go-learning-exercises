@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 	"net"
-	pb "go-grpc-postgress/proto"
+	pb "github/orion777-cmd/GO-LEARNING-EXCERSISES/protobuffer/go-grpc-postgress/proto"
 	"google.golang.org/grpc"	
 )
 
