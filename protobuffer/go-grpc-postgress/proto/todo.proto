@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package todo;
+
+option go_package = "example.com/go-grpc-postgress/proto/todo";
+
+message NewTodo{
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    bool done = 4;
+}
+
+message Todo {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    bool done = 4;
+}
+
+service TodoService {
+    rpc CreateTodo (NewTodo) returns (Todo);
+}
